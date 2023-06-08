@@ -12,6 +12,7 @@ stopButton.addEventListener('click', stopRecording);
 downloadButton.addEventListener('click', downloadRecording);
 
 function startRecording() {
+  setTimeout(overlayqueue, 1500)
   navigator.mediaDevices.getUserMedia({ video: true })
     .then((stream) => {
       video.srcObject = stream;
@@ -99,8 +100,49 @@ function blobToBase64(blob) {
   });
 }
 
-
 function showMessage(text) {
   const message = document.getElementById('message');
   message.textContent = text;
+}
+
+function overlayqueue(){
+  document.getElementById("overlay").style.display = "block";
+  setTimeout(display_none, 2500)
+  setTimeout(up_down_blk, 2500)
+}
+function display_none(){
+  document.getElementById("overlay").style.display = "none";
+}
+function up_down_nn(){
+  document.getElementById("up_down").style.display = "none";
+  document.getElementById("overlay").style.display = "none";
+  setTimeout(left_right_blk, 2500)
+}    
+function up_down_blk(){
+  document.getElementById("overlay").style.display = "block";
+  document.getElementById("text").style.display = "none";
+  document.getElementById("up_down").style.display = "block";
+  setTimeout(up_down_nn, 2500)
+}
+function left_right_blk(){
+  document.getElementById("overlay").style.display = "block";
+  document.getElementById("left_right").style.display = "block";
+  setTimeout(left_right_nn,5000)
+}
+function left_right_nn(){
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("left_right").style.display = "none";
+  setTimeout(test_result, 3000)
+  setTimeout(stopRecording, 3000)
+}
+
+function test_result(){
+  document.getElementById("success_test").style.display = 'block';
+  document.getElementById("overlay").style.display = 'block';
+  setTimeout(downloadRecording, 3000)
+  setTimeout(closewindow, 3000)
+}
+
+function closewindow(){
+  window.top.close();
 }
